@@ -77,3 +77,8 @@ This project is licensed under the MIT License.
 - [MongoDB](https://www.mongodb.com/)
 - [Socket.io](https://socket.io/)
 - [dotenv](https://www.npmjs.com/package/dotenv)
+
+## Live URL
+
+You can access the live version of the frontend application at the following URL:
+[Event Management Frontend](https://event-management-weld-psi.vercel.app/)
