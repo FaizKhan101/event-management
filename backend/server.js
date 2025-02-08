@@ -32,8 +32,8 @@ io.on("connection", (socket) => {
   socket.on("joinEvent", (eventId) => {
     socket.join(eventId);
   });
-  socket.on("updateAttendees", (eventId) => {
-    io.to(eventId).emit("refreshAttendees");
+  socket.on("updateAttendees", (eventId) => {    
+    io.emit("refreshAttendees");
   });
 });
 

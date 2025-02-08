@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import EventDetails from "./pages/EventDetails";
 import Navbar from "./components/Navbar";
 import CreateEvent from "./pages/CreateEvent";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/event/:id" element={<EventDetails />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );

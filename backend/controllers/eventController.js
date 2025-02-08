@@ -80,9 +80,9 @@ exports.addAttendee = async (req, res) => {
         if (!event.attendees.includes(req.user.id)) {
             event.attendees.push(req.user.id);
             await event.save();
-
+            
             // Notify all clients about the update
-            req.io.to(req.params.id).emit('refreshAttendees');
+            // req.io.emit("refreshAttendees");
         }
 
         res.json(event);

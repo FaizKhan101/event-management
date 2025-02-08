@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getEventById, attendEvent } from "../api";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3000");
 
 function EventDetails() {
     const { id } = useParams();
@@ -19,6 +22,8 @@ function EventDetails() {
     const handleAttend = async () => {
         await attendEvent(id, token);
         alert("You have joined the event!");
+         // Notify others that an attendee joined
+        socket.emit("updateAttendees");
     };
 
     return event ? (

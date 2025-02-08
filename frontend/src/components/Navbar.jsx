@@ -15,6 +15,7 @@ function Navbar() {
             <h2>Event Management</h2>
             <div>
                 <Link to="/" style={{ color: "#fff", marginRight: "10px" }}>Home</Link>
+                {token && <Link to="/dashboard" style={{ color: "#fff", marginRight: "10px" }}>Dashboard</Link>}
                 {token && <Link to="/create-event" style={{ color: "#fff", marginRight: "10px" }}>Create Event</Link>}
                 {token ? (
                     <button onClick={handleLogout} style={{ color: "#fff", background: "red", border: "none", padding: "5px 10px" }}>
