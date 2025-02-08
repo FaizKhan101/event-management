@@ -29,7 +29,7 @@ This project is a web application built using Node.js, Express, and MongoDB. It 
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-repo/project-name.git
+    git clone https://github.com/tz1123/event-management.git
     ```
 2. Navigate to the project directory:
     ```sh
