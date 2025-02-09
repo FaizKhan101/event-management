@@ -4,7 +4,7 @@ const Event = require('../models/Event');
 // Create Event
 exports.createEvent = async (req, res) => {
     try {
-        const { name, description, date, location } = req.body;
+        const { name, description, date, location,category } = req.body;
         const imageUrl = req.file ? req.file.path : ""; // Get image URL from Cloudinary
         console.log({date});
         
@@ -13,6 +13,7 @@ exports.createEvent = async (req, res) => {
             description,
             date: new Date(date),
             location,
+            category,
             image: imageUrl,
             createdBy: req.user.id
         });
@@ -60,6 +61,8 @@ exports.updateEvent = async (req, res) => {
         event.description = description || event.description;
         event.date = date || event.date;
         event.location = location || event.location;
+        event.image = req.file ? req.file.path : event.image;
+        event.category = req.body.category || event.category;
         
         await event.save();
         res.json(event);

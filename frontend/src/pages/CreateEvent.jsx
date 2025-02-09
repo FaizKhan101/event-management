@@ -9,6 +9,7 @@ function CreateEvent() {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
+  const [category, setCategory] = useState("");
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
@@ -20,18 +21,18 @@ function CreateEvent() {
     formData.append("description", description);
     formData.append("date", date);
     formData.append("location", location);
+    formData.append("category", category);
     if (image) formData.append("image", image);
 
     try {
-        await createEvent(formData, token);
-        alert("Event Created Successfully!");
-        navigate("/");
+      await createEvent(formData, token);
+      alert("Event Created Successfully!");
+      navigate("/");
     } catch (error) {
-        alert("Error creating event. Please try again.");
+      alert("Error creating event. Please try again.");
     }
-};
+  };
   console.log(image);
-  
 
   return (
     <form onSubmit={handleCreateEvent} encType="multipart/form-data">
@@ -47,7 +48,11 @@ function CreateEvent() {
       </p>
       <p>
         <label htmlFor="image">Image</label>
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} required />
+        <input
+          type="file"
+          onChange={(e) => setImage(e.target.files[0])}
+          required
+        />
       </p>
       <p>
         <label htmlFor={description}>Description</label>
@@ -65,6 +70,21 @@ function CreateEvent() {
           onChange={(e) => setLocation(e.target.value)}
           required
         />
+      </p>
+      <p>
+        <label htmlFor="category">Category</label>
+        <select
+          name="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
+        >
+          <option value="concert">Concert</option>
+          <option value="sport">Sport</option>
+          <option value="theater">Theater</option>
+          <option value="music">Music</option>
+          <option value="other">Other</option>
+        </select>
       </p>
       <p>
         <label htmlFor={date}>Date</label>
