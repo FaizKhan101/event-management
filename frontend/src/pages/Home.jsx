@@ -1,6 +1,6 @@
 // frontend/src/pages/Home.js
 import { useEffect, useState } from "react";
-import { getEvents } from "../api";
+import { getEvents, getUpcomingEvents } from "../api";
 import EventCard from "../components/EventCard";
 import classes from "./Home.module.css";
 
@@ -24,7 +24,7 @@ function Home() {
 
   useEffect(() => {
     async function fetchEvents() {
-      const { data } = await getEvents();
+      const { data } = await getUpcomingEvents();
       setEvents(data);
       setFilteredEvents(data);
     }

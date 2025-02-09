@@ -78,6 +78,7 @@ function CreateEvent() {
           onChange={(e) => setCategory(e.target.value)}
           required
         >
+          <option value="" disabled>---select---</option>
           <option value="concert">Concert</option>
           <option value="sport">Sport</option>
           <option value="theater">Theater</option>

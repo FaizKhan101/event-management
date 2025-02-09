@@ -18,6 +18,8 @@ export const guestUser = async (userData) =>
   axios.post(`${API_URL}/auth/guest`, userData);
 
 export const getEvents = async () => axios.get(`${API_URL}/events`);
+export const getUpcomingEvents = async () => axios.get(`${API_URL}/events/upcoming`);
+
 
 export const getEventById = async (id) => axios.get(`${API_URL}/events/${id}`);
 

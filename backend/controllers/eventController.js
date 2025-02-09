@@ -28,6 +28,19 @@ exports.createEvent = async (req, res) => {
 exports.getEvents = async (req, res) => {
 
   try {
+    const events = await Event.find().populate(
+      "createdBy",
+      "name"
+    );
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getUpcomingEvents = async (req, res) => {
+
+  try {
     const events = await Event.find({ date: { $gte: new Date() } }).populate(
       "createdBy",
       "name"
@@ -37,6 +50,7 @@ exports.getEvents = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // Get Single Event
 exports.getEventById = async (req, res) => {
