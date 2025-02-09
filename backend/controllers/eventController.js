@@ -5,11 +5,22 @@ const Event = require('../models/Event');
 exports.createEvent = async (req, res) => {
     try {
         const { name, description, date, location } = req.body;
-        const newEvent = new Event({ name, description, date, location, createdBy: req.user.id });
+        const imageUrl = req.file ? req.file.path : ""; // Get image URL from Cloudinary
+
+        const newEvent = new Event({
+            name,
+            description,
+            date,
+            location,
+            image: imageUrl,
+            createdBy: req.user.id
+        });
+
         await newEvent.save();
         res.status(201).json(newEvent);
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.log(error);
+        res.status(500).json({ message: "Server error" });
     }
 };
 

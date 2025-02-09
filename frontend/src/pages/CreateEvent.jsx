@@ -8,16 +8,24 @@ function CreateEvent() {
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
+    const [image, setImage] = useState(null);
     const navigate = useNavigate();
     
     const token = localStorage.getItem("token");
 
     const handleCreateEvent = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("description", description);
+        formData.append("date", date);
+        formData.append("location", location);
+        if (image) formData.append("image", image);
+
         try {
-            await createEvent({ name, description, date, location }, token);
+            await createEvent(formData, token);
             alert("Event Created Successfully!");
-            navigate("/"); // Redirect to home after creation
+            navigate("/");
         } catch (error) {
             alert("Error creating event. Please try again.");
         }
@@ -27,10 +35,11 @@ function CreateEvent() {
         <div>
             <h2>Create New Event</h2>
             <form onSubmit={handleCreateEvent}>
-                <input type="text" placeholder="Event Name" value={name} onChange={(e) => setName(e.target.value)} required />
+            <input type="text" placeholder="Event Name" value={name} onChange={(e) => setName(e.target.value)} required />
                 <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
                 <input type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} required />
                 <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} required />
+                <input type="file" onChange={(e) => setImage(e.target.files[0])} required />
                 <button type="submit">Create Event</button>
             </form>
         </div>

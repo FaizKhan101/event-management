@@ -1,6 +1,5 @@
-// frontend/src/pages/Login.js
 import { useState } from "react";
-import { loginUser } from "../api";
+import { guestUser, loginUser } from "../api";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -19,6 +18,17 @@ function Login() {
         }
     };
 
+    const handleGuestLogin = async () => {
+        try {
+            const { data } = await guestUser();
+            localStorage.setItem("token", data.token);
+            alert("Logged in as Guest!");
+            navigate("/");
+        } catch (error) {
+            alert("Guest login failed.");
+        }
+    };
+
     return (
         <div>
             <h2>Login</h2>
@@ -27,6 +37,9 @@ function Login() {
                 <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
                 <button type="submit">Login</button>
             </form>
+            <button onClick={handleGuestLogin} style={{ marginTop: "10px", background: "gray", color: "#fff", border: "none", padding: "5px 10px" }}>
+                Continue as Guest
+            </button>
         </div>
     );
 }

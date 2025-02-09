@@ -37,3 +37,14 @@ exports.login = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.guestLogin = async (req, res) => {
+    try {
+        // Generate a guest JWT token with a short expiry
+        const guestToken = jwt.sign({ guest: true }, process.env.JWT_SECRET, { expiresIn: "2h" });
+
+        res.json({ token: guestToken, user: { name: "Guest", guest: true } });
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+};

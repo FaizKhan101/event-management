@@ -1,9 +1,28 @@
 // frontend/src/components/Navbar.js
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 
 function Navbar() {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
+    const [isGuest, setIsGuest] = useState(false);
+
+    useEffect(() => {
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                console.log(decoded);
+                
+                setIsGuest(decoded.guest || false); // Check if the token is a guest token
+            } catch (error) {
+                setIsGuest(false);
+            }
+        } else {
+            setIsGuest(false);
+        }
+    }, [token]);
+
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -16,10 +35,10 @@ function Navbar() {
             <div>
                 <Link to="/" style={{ color: "#fff", marginRight: "10px" }}>Home</Link>
                 {token && <Link to="/dashboard" style={{ color: "#fff", marginRight: "10px" }}>Dashboard</Link>}
-                {token && <Link to="/create-event" style={{ color: "#fff", marginRight: "10px" }}>Create Event</Link>}
+                {token && !isGuest && <Link to="/create-event" style={{ color: "#fff", marginRight: "10px" }}>Create Event</Link>}
                 {token ? (
                     <button onClick={handleLogout} style={{ color: "#fff", background: "red", border: "none", padding: "5px 10px" }}>
-                        Logout
+                       {isGuest ? "Exit Guest Mode" : "Logout"}
                     </button>
                 ) : (
                     <>

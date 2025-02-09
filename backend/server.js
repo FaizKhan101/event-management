@@ -26,6 +26,11 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 
+app.use((err,req,res,next)=>{
+    console.log(err);
+    res.status(err.http_code || 500).json({message: err.message || "Server error"});
+});
+
 // WebSocket Logic
 io.on("connection", (socket) => {
   console.log("New WebSocket connection");
