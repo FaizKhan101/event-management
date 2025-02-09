@@ -32,7 +32,6 @@ function CreateEvent() {
       alert("Error creating event. Please try again.");
     }
   };
-  console.log(image);
 
   return (
     <form onSubmit={handleCreateEvent} encType="multipart/form-data">

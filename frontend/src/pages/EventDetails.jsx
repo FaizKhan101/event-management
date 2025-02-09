@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getEventById, attendEvent } from "../api";
 import { io } from "socket.io-client";
-import { jwtDecode } from 'jwt-decode'
+import { jwtDecode } from "jwt-decode";
 import classes from "./EventDetails.module.css";
 
 const socket = io("http://localhost:3000");
@@ -19,12 +19,8 @@ function EventDetails() {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        console.log(decoded);
-
         setIsGuest(decoded.guest || false); // Check if the token is a guest token
       } catch (error) {
-        console.log(error);
-
         setIsGuest(false);
       }
     } else {
@@ -36,7 +32,6 @@ function EventDetails() {
       setEvent(data);
     }
     fetchEvent();
-
   }, [id, token]);
 
   const handleAttend = async () => {

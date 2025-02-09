@@ -35,7 +35,7 @@ function Dashboard() {
 
     // Listen for real-time updates
     socket.on("refreshAttendees", () => {
-      console.log("Received refreshAttendees event");
+      console.log("Received refresh Attendees event");
       fetchEvents(); // Fetch updated event list
     });
 
