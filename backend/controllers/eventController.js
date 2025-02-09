@@ -6,11 +6,12 @@ exports.createEvent = async (req, res) => {
     try {
         const { name, description, date, location } = req.body;
         const imageUrl = req.file ? req.file.path : ""; // Get image URL from Cloudinary
-
+        console.log({date});
+        
         const newEvent = new Event({
             name,
             description,
-            date,
+            date: new Date(date),
             location,
             image: imageUrl,
             createdBy: req.user.id
@@ -27,7 +28,7 @@ exports.createEvent = async (req, res) => {
 // Get All Events
 exports.getEvents = async (req, res) => {
     try {
-        const events = await Event.find().populate('createdBy', 'name');
+        const events = await Event.find({date:{$gte: new Date()}}).populate('createdBy', 'name');
         res.json(events);
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
