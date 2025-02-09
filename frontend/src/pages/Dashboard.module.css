@@ -1,0 +1,25 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard h2 {
+    font-size: xx-large;
+}
+
+.dashboard table {
+    text-align: center;
+    
+}
+
+.dashboard a {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+}
+
+.dashboard a:hover {
+    color: green;
+}

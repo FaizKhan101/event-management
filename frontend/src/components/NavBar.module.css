@@ -1,0 +1,59 @@
+.mainHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 2rem;
+    text-decoration: none;
+    color: white;
+}
+
+.title img {
+    width: 4rem;
+    height: 4rem;
+    margin: 0;
+}
+
+.title h1 {
+    margin: 0;
+}
+
+.navList  {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    font-size: larger;
+}
+
+.auth {
+    display: flex;
+    gap: 6rem;
+}
+
+.navList li a{
+    color: white;
+}
+
+.navList li a:hover,
+.navList li a.active{
+    color: wheat;
+    text-shadow: 0px 0px 11px white;
+
+}
+
+.navList button {
+    background-color: rgb(153, 120, 120);
+    color: red;
+}
+
+.navList button:hover {
+    background-color: rgb(220, 42, 42);
+    color: rgb(87, 3, 3);
+}

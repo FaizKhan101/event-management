@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1f1b24;
+  background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 0C6.716 0 0 6.716 0 15c8.284 0 15-6.716 15-15zM0 15c0 8.284 6.716 15 15 15 0-8.284-6.716-15-15-15zm30 0c0-8.284-6.716-15-15-15 0 8.284 6.716 15 15 15zm0 0c0 8.284-6.716 15-15 15 0-8.284 6.716-15 15-15z' fill='%23574b6b' fill-opacity='0.27' fill-rule='evenodd'/%3E%3C/svg%3E");
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: white;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    padding: 8px 18px;
+    border-radius: 4px;
+    border: none;
+    font-weight: bold;
+    font: inherit;
+    background-color: rgb(3, 3, 49);
+    color: white;
+    text-transform: uppercase;
+}
+
+button:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(14, 71, 36);
+}
+
+form {
+    width: 25rem;
+    max-width: 40%;
+    margin: 2rem auto;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    padding: 2rem;
+    font-weight: bold;
+    box-shadow: 0px 0px 11px white;
+}
+
+form h2 {
+    margin: 0;
+}
+
+form p {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    gap: 6px;
+    margin: 1rem;
+}
+
+form p input,
+form p textarea {
+    border: none;
+    padding: 8px 4px;
+    border-radius: 4px;
+}
