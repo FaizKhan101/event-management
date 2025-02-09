@@ -56,6 +56,7 @@ function Login() {
           <button type="submit">Login</button>
         </p>
       </form>
+      <div style={{ textAlign: "center" }}>
       <button
         onClick={handleGuestLogin}
         style={{
@@ -68,6 +69,7 @@ function Login() {
       >
         Continue as Guest
       </button>
+      </div>
     </div>
   );
 }

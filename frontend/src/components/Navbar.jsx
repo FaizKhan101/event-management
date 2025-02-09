@@ -2,6 +2,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/events-logo.png";
 import classes from "./NavBar.module.css";
+import { useEffect, useState } from "react";
 
 function Navbar() {
   const token = localStorage.getItem("token");
@@ -42,7 +43,6 @@ function Navbar() {
           <li>
             <NavLink to="/" className={({isActive}) => isActive ? classes.active : undefined}>Home</NavLink>
           </li>
-          <li>{token && <NavLink to="/guest-login" className={({isActive}) => isActive ? classes.active : undefined}>Guest Login</NavLink>}</li>
           <li>{token && <NavLink to="/dashboard" className={({isActive}) => isActive ? classes.active : undefined}>Dashboard</NavLink>}</li>
           <li>{token && !isGuest && <NavLink to="/create-event" className={({isActive}) => isActive ? classes.active : undefined}>Create Event</NavLink>}</li>
           <li>

@@ -28,8 +28,32 @@ function Dashboard() {
 
   return (
     <div className={classes.dashboard}>
-      <h2>Event Dashboard</h2>
-      <table border="1" cellPadding="10">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" ,gap: "2rem",width: "80%"}}>
+        <div>
+          <h2>Event Dashboard</h2>
+        </div>
+        <div style={{ display: "flex", gap: "1rem" }}> 
+          <div>
+            <label htmlFor="name">Category: </label>
+            <select name="category" id="category">
+              <option value="all">All</option>
+              <option value="concert">Concert</option>
+              <option value="sport">Sport</option>
+              <option value="theater">Theater</option>
+              <option value="music">Music</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="date">Date: </label>
+            <input
+              type="datetime-local"
+              onChange={(e) => console.log(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+      <table border="1" cellPadding="10" style={{ width: "80%" }}>
         <thead>
           <tr>
             <th>Event Name</th>
@@ -40,17 +64,23 @@ function Dashboard() {
           </tr>
         </thead>
         <tbody>
-          {events.length > 0 ? events.map((event) => (
-            <tr key={event._id}>
-              <td>{event.name}</td>
-              <td>{new Date(event.date).toLocaleString()}</td>
-              <td>{event.location}</td>
-              <td>{event.attendees.length}</td>
-              <td>
-                <Link to={`/event/${event._id}`}>View</Link>
-              </td>
+          {events.length > 0 ? (
+            events.map((event) => (
+              <tr key={event._id}>
+                <td>{event.name}</td>
+                <td>{new Date(event.date).toLocaleString()}</td>
+                <td>{event.location}</td>
+                <td>{event.attendees.length}</td>
+                <td>
+                  <Link to={`/event/${event._id}`}>View</Link>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5}>Loading...</td>
             </tr>
-          )) : <p>Loading...</p>}
+          )}
         </tbody>
       </table>
     </div>
