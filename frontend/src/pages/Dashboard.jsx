@@ -10,17 +10,37 @@ const socket = io(domain);
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+
+  const handleCategoryFilter = (category) => {
+    if (category === "all") {
+      setFilteredEvents(events);
+      return;
+    }
+    const filtered = events.filter((event) => event.category === category);
+    setFilteredEvents(filtered);
+  };
+
+  const handleDateFilter = (date) => {
+    const filtered = events.filter((event) => {
+      const eventDate = new Date(event.date).setHours(0, 0, 0, 0);
+      const filterDate = new Date(date).setHours(0, 0, 0, 0);
+      return eventDate === filterDate;
+    });
+    setFilteredEvents(filtered);
+  };
 
   useEffect(() => {
     async function fetchEvents() {
       const { data } = await getEvents();
       setEvents(data);
+      setFilteredEvents(data);
     }
     fetchEvents();
 
     // Listen for real-time updates
     socket.on("refreshAttendees", () => {
-      console.log("Received refreshAttendees event");
+      console.log("Received refresh Attendees event");
       fetchEvents(); // Fetch updated event list
     });
 
@@ -35,8 +55,8 @@ function Dashboard() {
         </div>
         <div style={{ display: "flex", gap: "1rem" }}> 
           <div>
-            <label htmlFor="name">Category: </label>
-            <select name="category" id="category">
+            <label htmlFor="category">Category: </label>
+            <select name="category" id="category" onChange={(e) => handleCategoryFilter(e.target.value)}>
               <option value="all">All</option>
               <option value="concert">Concert</option>
               <option value="sport">Sport</option>
@@ -48,8 +68,8 @@ function Dashboard() {
           <div>
             <label htmlFor="date">Date: </label>
             <input
-              type="datetime-local"
-              onChange={(e) => console.log(e.target.value)}
+              type="date"
+              onChange={(e) => handleDateFilter(e.target.value)}
             />
           </div>
         </div>
@@ -60,17 +80,19 @@ function Dashboard() {
             <th>Event Name</th>
             <th>Date</th>
             <th>Location</th>
+            <th>Category</th>
             <th>Attendees</th>
             <th>Details</th>
           </tr>
         </thead>
         <tbody>
-          {events.length > 0 ? (
-            events.map((event) => (
+          {filteredEvents.length > 0 ? (
+            filteredEvents.map((event) => (
               <tr key={event._id}>
                 <td>{event.name}</td>
                 <td>{new Date(event.date).toLocaleString()}</td>
                 <td>{event.location}</td>
+                <td>{event.category}</td>
                 <td>{event.attendees.length}</td>
                 <td>
                   <Link to={`/event/${event._id}`}>View</Link>
@@ -79,7 +101,7 @@ function Dashboard() {
             ))
           ) : (
             <tr>
-              <td colSpan={5}>Loading...</td>
+              <td colSpan={6}>No events found</td>
             </tr>
           )}
         </tbody>

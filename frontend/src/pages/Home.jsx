@@ -6,14 +6,31 @@ import classes from "./Home.module.css";
 
 function Home() {
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+
+  const handleCategoryFilter = (category) => {
+    if (category === "all") {
+      setFilteredEvents(events);
+      return;
+    }
+    const filtered = events.filter((event) => event.category === category);
+    setFilteredEvents(filtered);
+  };
+
+  const handleDateFilter = (date) => {
+    const filtered = events.filter((event) => new Date(event.date) >= new Date(date));
+    setFilteredEvents(filtered);
+  };
 
   useEffect(() => {
     async function fetchEvents() {
       const { data } = await getEvents();
       setEvents(data);
+      setFilteredEvents(data);
     }
     fetchEvents();
   }, []);
+
 
   return (
     <>
@@ -24,8 +41,12 @@ function Home() {
       </div>
       <div style={{ display: "flex", gap: "1rem" }}> 
           <div>
-            <label htmlFor="name">Category: </label>
-            <select name="category" id="category">
+            <label htmlFor="category">Category: </label>
+            <select
+              name="category"
+              id="category"
+              onChange={(e) => handleCategoryFilter(e.target.value)}
+            >
               <option value="all">All</option>
               <option value="concert">Concert</option>
               <option value="sport">Sport</option>
@@ -34,18 +55,11 @@ function Home() {
               <option value="other">Other</option>
             </select>
           </div>
-          <div>
-            <label htmlFor="date">Date: </label>
-            <input
-              type="datetime-local"
-              onChange={(e) => console.log(e.target.value)}
-            />
-          </div>
         </div>
     </div>
-      {events.length > 0 ? (
+      {filteredEvents.length > 0 ? (
         <ul className={classes.events}>
-          {events.map((event) => (
+          {filteredEvents.map((event) => (
             <EventCard key={event._id} event={event} />
           ))}
         </ul>
