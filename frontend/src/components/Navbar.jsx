@@ -3,21 +3,25 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/events-logo.png";
 import classes from "./NavBar.module.css";
 import { useEffect, useState } from "react";
+import { jwtDecode } from 'jwt-decode'
 
 function Navbar() {
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
-
   const [isGuest, setIsGuest] = useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
-  useEffect(() => {
-      if (token) {
+
+  useEffect(() => {    
+    
+    if (token) {
           try {
               const decoded = jwtDecode(token);
               console.log(decoded);
               
               setIsGuest(decoded.guest || false); // Check if the token is a guest token
           } catch (error) {
+            console.log(error);
+            
               setIsGuest(false);
           }
       } else {
