@@ -11,7 +11,7 @@ exports.createEvent = async (req, res) => {
         const newEvent = new Event({
             name,
             description,
-            date,
+            date: new Date(date),
             location,
             image: imageUrl,
             createdBy: req.user.id
@@ -28,11 +28,7 @@ exports.createEvent = async (req, res) => {
 // Get All Events
 exports.getEvents = async (req, res) => {
     try {
-        const now = new Date();
-        const startOfToday = new Date(now.setHours(0, 0, 0, 0));  // Start of today (midnight)
-        const endOfToday = new Date(now.setHours(23, 59, 59, 999));
-        const events = await Event.find({ date: { $gte: startOfToday } }).populate('createdBy', 'name');
-
+        const events = await Event.find().populate('createdBy', 'name');
         res.json(events);
     } catch (error) {
         res.status(500).json({ message: 'Server error' });

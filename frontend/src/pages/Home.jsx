@@ -50,7 +50,7 @@ function Home() {
           ))}
         </ul>
       ) : (
-        <p style={{ textAlign: "center" }}>Loading...</p>
+        <p style={{ textAlign: "center" }}>No Events Available</p>
       )}
     </>
   );
