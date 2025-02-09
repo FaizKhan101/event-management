@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getEventById, attendEvent } from "../api";
 import { io } from "socket.io-client";
-import { jwtDecode } from "jwt-decode";
 import classes from "./EventDetails.module.css";
+import { domain } from "../api";
+import { jwtDecode } from "jwt-decode";
 
-const socket = io("http://localhost:3000");
+const socket = io(domain);
 
 function EventDetails() {
   const { id } = useParams();
@@ -46,6 +47,7 @@ function EventDetails() {
       <h2>{event.name}</h2>
       <p>{event.description}</p>
       <p>{new Date(event.date).toLocaleString()}</p>
+
       {token && !isGuest ? (
         <button onClick={handleAttend}>Join Event</button>
       ) : (

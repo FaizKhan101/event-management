@@ -26,6 +26,7 @@ exports.createEvent = async (req, res) => {
 
 // Get All Events
 exports.getEvents = async (req, res) => {
+
   try {
     const events = await Event.find({ date: { $gte: new Date() } }).populate(
       "createdBy",
@@ -53,6 +54,7 @@ exports.getEventById = async (req, res) => {
 
 // Update Event
 exports.updateEvent = async (req, res) => {
+
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
@@ -92,6 +94,7 @@ exports.deleteEvent = async (req, res) => {
 };
 
 exports.addAttendee = async (req, res) => {
+
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
@@ -102,6 +105,7 @@ exports.addAttendee = async (req, res) => {
 
       // Notify all clients about the update
       // req.io.emit("refreshAttendees");
+
     }
 
     res.json(event);
