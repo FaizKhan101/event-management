@@ -6,7 +6,8 @@ exports.createEvent = async (req, res) => {
     try {
         const { name, description, date, location } = req.body;
         const imageUrl = req.file ? req.file.path : ""; // Get image URL from Cloudinary
-
+        console.log({date});
+        
         const newEvent = new Event({
             name,
             description,
@@ -27,7 +28,11 @@ exports.createEvent = async (req, res) => {
 // Get All Events
 exports.getEvents = async (req, res) => {
     try {
-        const events = await Event.find().populate('createdBy', 'name');
+        const now = new Date();
+        const startOfToday = new Date(now.setHours(0, 0, 0, 0));  // Start of today (midnight)
+        const endOfToday = new Date(now.setHours(23, 59, 59, 999));
+        const events = await Event.find({ date: { $gte: startOfToday } }).populate('createdBy', 'name');
+
         res.json(events);
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
@@ -59,7 +64,7 @@ exports.updateEvent = async (req, res) => {
         event.description = description || event.description;
         event.date = date || event.date;
         event.location = location || event.location;
-        
+
         await event.save();
         res.json(event);
     } catch (error) {
@@ -91,7 +96,7 @@ exports.addAttendee = async (req, res) => {
         if (!event.attendees.includes(req.user.id)) {
             event.attendees.push(req.user.id);
             await event.save();
-            
+
             // Notify all clients about the update
             // req.io.emit("refreshAttendees");
         }
@@ -99,7 +104,7 @@ exports.addAttendee = async (req, res) => {
         res.json(event);
     } catch (error) {
         console.log(error);
-        
+
         res.status(500).json({ message: 'Server error' });
     }
 };
