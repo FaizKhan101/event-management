@@ -1,7 +1,12 @@
 // frontend/src/api.js
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api"; // Update this with your deployed backend URL
+// const API_URL = "http://localhost:3000/api"; // Update this with your deployed backend URL
+
+export const domain = "https://event-management-iapa.onrender.com"
+
+const API_URL = domain + "/api";
+
 
 export const registerUser = async (userData) =>
   axios.post(`${API_URL}/auth/register`, userData);

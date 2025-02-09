@@ -4,8 +4,9 @@ import { getEvents } from "../api";
 import { Link } from "react-router-dom";
 import { io } from "socket.io-client";
 import classes from "./Dashboard.module.css";
+import { domain } from "../api";
 
-const socket = io("http://localhost:3000");
+const socket = io(domain);
 
 function Dashboard() {
   const [events, setEvents] = useState([]);

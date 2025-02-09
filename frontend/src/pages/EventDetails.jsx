@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getEventById, attendEvent } from "../api";
 import { io } from "socket.io-client";
-import classes from "./EventDetails.module.css"
+import classes from "./EventDetails.module.css";
+import { domain } from "../api";
 
-const socket = io("http://localhost:3000");
+const socket = io(domain);
 
 function EventDetails() {
   const { id } = useParams();
@@ -32,11 +33,16 @@ function EventDetails() {
       <h2>{event.name}</h2>
       <p>{event.description}</p>
       <p>{new Date(event.date).toLocaleString()}</p>
-      {token ? <button onClick={handleAttend}>Join Event</button> : <p><Link to="/guest-login">Login</Link> as a guest.</p>}
-      
+      {token ? (
+        <button onClick={handleAttend}>Join Event</button>
+      ) : (
+        <p>
+          <Link to="/guest-login">Login</Link> as a guest.
+        </p>
+      )}
     </div>
   ) : (
-    <p style={{textAlign: 'center'}}>Loading...</p>
+    <p style={{ textAlign: "center" }}>Loading...</p>
   );
 }
 
