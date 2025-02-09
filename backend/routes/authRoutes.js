@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post('/register', register);
 router.post('/login', login);
-router.post('/guest-login', guestLogin);
+router.post("/guest", guestLogin); // Add Guest Login Route
 
 module.exports = router;

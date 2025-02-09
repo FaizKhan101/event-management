@@ -40,21 +40,11 @@ exports.login = async (req, res) => {
 
 exports.guestLogin = async (req, res) => {
     try {
-        const { email } = req.body;
-        console.log({email});
-        
-        // const user = await User.findOne({ email });
+        // Generate a guest JWT token with a short expiry
+        const guestToken = jwt.sign({ guest: true }, process.env.JWT_SECRET, { expiresIn: "2h" });
 
-        // if (!user) return res.status(400).json({ message: 'Invalid credentials' });
-
-        // const isMatch = await bcrypt.compare(password, user.password);
-
-        // if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-
-        const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        res.json({ token, user: { email: email } });
+        res.json({ token: guestToken, user: { name: "Guest", guest: true } });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: "Server error" });
     }
 };

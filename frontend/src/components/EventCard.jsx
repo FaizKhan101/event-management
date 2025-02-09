@@ -7,6 +7,7 @@ function EventCard({ event }) {
     <li className={classes.eventItem}>
       <article>
         <h2>{event.name}</h2>
+        <img src={event.image} alt={event.name} style={{ width: "100%", height: "150px", objectFit: "cover" }} />
         <p>{event.description}</p>
         <p>
           <strong>Date:</strong> {new Date(event.date).toLocaleString()}

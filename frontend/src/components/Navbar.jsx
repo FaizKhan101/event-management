@@ -7,6 +7,24 @@ function Navbar() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
+  const [isGuest, setIsGuest] = useState(false);
+
+  useEffect(() => {
+      if (token) {
+          try {
+              const decoded = jwtDecode(token);
+              console.log(decoded);
+              
+              setIsGuest(decoded.guest || false); // Check if the token is a guest token
+          } catch (error) {
+              setIsGuest(false);
+          }
+      } else {
+          setIsGuest(false);
+      }
+  }, [token]);
+
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -26,10 +44,10 @@ function Navbar() {
           </li>
           <li>{token && <NavLink to="/guest-login" className={({isActive}) => isActive ? classes.active : undefined}>Guest Login</NavLink>}</li>
           <li>{token && <NavLink to="/dashboard" className={({isActive}) => isActive ? classes.active : undefined}>Dashboard</NavLink>}</li>
-          <li>{token && <NavLink to="/create-event" className={({isActive}) => isActive ? classes.active : undefined}>Create Event</NavLink>}</li>
+          <li>{token && !isGuest && <NavLink to="/create-event" className={({isActive}) => isActive ? classes.active : undefined}>Create Event</NavLink>}</li>
           <li>
             {token ? (
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout}>{isGuest ? "Exit Guest Mode" : "Logout"}</button>
             ) : (
               <div className={classes.auth}>
                 <NavLink to="/login" className={({isActive}) => isActive ? classes.active : undefined}>Login</NavLink>
@@ -42,5 +60,4 @@ function Navbar() {
     </header>
   );
 }
-
 export default Navbar;

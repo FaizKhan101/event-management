@@ -15,14 +15,21 @@ function CreateEvent() {
 
   const handleCreateEvent = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("date", date);
+    formData.append("location", location);
+    if (image) formData.append("image", image);
+
     try {
-      await createEvent({ name, image, description, date, location }, token);
-      alert("Event Created Successfully!");
-      navigate("/"); // Redirect to home after creation
+        await createEvent(formData, token);
+        alert("Event Created Successfully!");
+        navigate("/");
     } catch (error) {
-      alert("Error creating event. Please try again.");
+        alert("Error creating event. Please try again.");
     }
-  };
+};
   console.log(image);
   
 
@@ -40,12 +47,7 @@ function CreateEvent() {
       </p>
       <p>
         <label htmlFor="image">Image</label>
-        <input
-          type="file"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-          required
-        />
+        <input type="file" onChange={(e) => setImage(e.target.files[0])} required />
       </p>
       <p>
         <label htmlFor={description}>Description</label>
