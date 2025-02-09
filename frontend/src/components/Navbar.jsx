@@ -1,54 +1,63 @@
 // frontend/src/components/Navbar.js
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import logo from "../assets/events-logo.png";
+import classes from "./NavBar.module.css";
 
 function Navbar() {
-    const token = localStorage.getItem("token");
-    const navigate = useNavigate();
-    const [isGuest, setIsGuest] = useState(false);
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (token) {
-            try {
-                const decoded = jwtDecode(token);
-                console.log(decoded);
-                
-                setIsGuest(decoded.guest || false); // Check if the token is a guest token
-            } catch (error) {
-                setIsGuest(false);
-            }
-        } else {
-            setIsGuest(false);
-        }
-    }, [token]);
+  const [isGuest, setIsGuest] = useState(false);
+
+  useEffect(() => {
+      if (token) {
+          try {
+              const decoded = jwtDecode(token);
+              console.log(decoded);
+              
+              setIsGuest(decoded.guest || false); // Check if the token is a guest token
+          } catch (error) {
+              setIsGuest(false);
+          }
+      } else {
+          setIsGuest(false);
+      }
+  }, [token]);
 
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/login");
-    };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
-    return (
-        <nav style={{ display: "flex", justifyContent: "space-between", padding: "10px", background: "#333", color: "#fff" }}>
-            <h2>Event Management</h2>
-            <div>
-                <Link to="/" style={{ color: "#fff", marginRight: "10px" }}>Home</Link>
-                {token && <Link to="/dashboard" style={{ color: "#fff", marginRight: "10px" }}>Dashboard</Link>}
-                {token && !isGuest && <Link to="/create-event" style={{ color: "#fff", marginRight: "10px" }}>Create Event</Link>}
-                {token ? (
-                    <button onClick={handleLogout} style={{ color: "#fff", background: "red", border: "none", padding: "5px 10px" }}>
-                       {isGuest ? "Exit Guest Mode" : "Logout"}
-                    </button>
-                ) : (
-                    <>
-                        <Link to="/login" style={{ color: "#fff", marginRight: "10px" }}>Login</Link>
-                        <Link to="/register" style={{ color: "#fff" }}>Register</Link>
-                    </>
-                )}
-            </div>
-        </nav>
-    );
+  return (
+    <header className={classes.mainHeader}>
+      <Link to="/" className={classes.title}>
+        <img src={logo} alt="Page logo" />
+        <h1>EMW</h1>
+      </Link>
+
+      <nav>
+        <ul className={classes.navList}>
+          <li>
+            <NavLink to="/" className={({isActive}) => isActive ? classes.active : undefined}>Home</NavLink>
+          </li>
+          <li>{token && <NavLink to="/guest-login" className={({isActive}) => isActive ? classes.active : undefined}>Guest Login</NavLink>}</li>
+          <li>{token && <NavLink to="/dashboard" className={({isActive}) => isActive ? classes.active : undefined}>Dashboard</NavLink>}</li>
+          <li>{token && !isGuest && <NavLink to="/create-event" className={({isActive}) => isActive ? classes.active : undefined}>Create Event</NavLink>}</li>
+          <li>
+            {token ? (
+              <button onClick={handleLogout}>{isGuest ? "Exit Guest Mode" : "Logout"}</button>
+            ) : (
+              <div className={classes.auth}>
+                <NavLink to="/login" className={({isActive}) => isActive ? classes.active : undefined}>Login</NavLink>
+                <NavLink to="/register" className={({isActive}) => isActive ? classes.active : undefined}>Register</NavLink>
+              </div>
+            )}
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
 }
-
 export default Navbar;

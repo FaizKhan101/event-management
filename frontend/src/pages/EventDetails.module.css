@@ -1,0 +1,30 @@
+.eventDetails {
+  text-align: center;
+  background-color: #1d1a16;
+  width: 50%;
+  margin: 2rem auto;
+  border-radius: 6px;
+  box-shadow: 0px 0px 6px white;
+  padding: 2rem;
+}
+
+.eventDetails h2 {
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.eventDetails p {
+    font-style: italic;
+}
+
+.eventDetails button {
+    padding: 10px 18px;
+    /* font-weight: bold; */
+
+    margin-top: 1rem;
+}
+
+.eventDetails a:hover {
+    color: wheat;
+    text-shadow: 0px 0px 11px white;
+}

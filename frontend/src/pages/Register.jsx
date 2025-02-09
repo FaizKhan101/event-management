@@ -4,32 +4,58 @@ import { registerUser } from "../api";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        try {
-            await registerUser({ name, email, password });
-            navigate("/login");
-        } catch (error) {
-            alert("Error registering user");
-        }
-    };
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      await registerUser({ name, email, password });
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
 
-    return (
-        <div>
-            <h2>Register</h2>
-            <form onSubmit={handleRegister}>
-                <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} required />
-                <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required />
-                <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
-                <button type="submit">Register</button>
-            </form>
-        </div>
-    );
+      alert("Error registering user");
+    }
+  };
+
+  return (
+    <form onSubmit={handleRegister}>
+      <h2>Register</h2>
+      <p>
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </p>
+      <p>
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </p>
+      <p>
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </p>
+      <p>
+        <button type="submit">Register</button>
+      </p>
+    </form>
+  );
 }
 
 export default Register;
