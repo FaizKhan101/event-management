@@ -1,9 +1,9 @@
 // frontend/src/api.js
 import axios from "axios";
 
-export const domain = "http://localhost:3000"; // Update this with your deployed backend URL
+// export const domain = "http://localhost:3000"; // Update this with your deployed backend URL
 
-// export const domain = "https://event-management-iapa.onrender.com"
+export const domain = "https://event-management-iapa.onrender.com"
 
 const API_URL = domain + "/api";
 
