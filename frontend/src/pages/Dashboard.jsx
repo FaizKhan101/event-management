@@ -21,7 +21,11 @@ function Dashboard() {
   };
 
   const handleDateFilter = (date) => {
-    const filtered = events.filter((event) => new Date(event.date) >= new Date(date));
+    const filtered = events.filter((event) => {
+      const eventDate = new Date(event.date).setHours(0, 0, 0, 0);
+      const filterDate = new Date(date).setHours(0, 0, 0, 0);
+      return eventDate === filterDate;
+    });
     setFilteredEvents(filtered);
   };
 
@@ -63,7 +67,7 @@ function Dashboard() {
           <div>
             <label htmlFor="date">Date: </label>
             <input
-              type="datetime-local"
+              type="date"
               onChange={(e) => handleDateFilter(e.target.value)}
             />
           </div>
