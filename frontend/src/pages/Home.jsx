@@ -55,13 +55,6 @@ function Home() {
               <option value="other">Other</option>
             </select>
           </div>
-          <div>
-            <label htmlFor="date">Date: </label>
-            <input
-              type="datetime-local"
-              onChange={(e) => handleDateFilter(e.target.value)}
-            />
-          </div>
         </div>
     </div>
       {filteredEvents.length > 0 ? (
